@@ -68,6 +68,9 @@ namespace EcoLauncher.Views
                 case "/front/guest/imageauth.aspx":
                     ViewModel.Status = "画像認証が必要です。";
                     break;
+                case "/front/member/webgs/eccenter_old.aspx":
+                    ViewModel.Status = "ログインが完了しました。";
+                    break;
             }
         }
 
