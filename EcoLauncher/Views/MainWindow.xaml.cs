@@ -4,6 +4,9 @@ using mshtml;
 using System;
 using System.Windows;
 using System.Windows.Navigation;
+using System.Linq;
+using System.Collections;
+using System.Windows.Controls;
 
 namespace EcoLauncher.Views
 {
@@ -102,6 +105,7 @@ namespace EcoLauncher.Views
                     break;
                 case "/front/member/webgs/eccenter_old.aspx":
                     ViewModel.Status = "ログインが完了しました。";
+                    ListAccounts();
                     break;
             }
         }
@@ -121,6 +125,35 @@ namespace EcoLauncher.Views
             doc.getElementById("MainContent_loginNameControl_txtLoginName").setAttribute("value", Settings.Default.UserName);
             doc.getElementById("MainContent_passwordControl_txtPassword").setAttribute("value", Settings.Default.Password);
             doc.getElementById("MainContent_btNext1").click();
+        }
+
+        private void ListAccounts()
+        {
+            var doc = (HTMLDocument)Browser.Document;
+            var rootSpan = (HTMLSpanElement)doc.getElementById("labViewAttractionID");
+            var tbody = rootSpan.getElementsByTagName("tbody").Cast<HTMLTableSection>().First();
+
+            var accounts = ((IEnumerable)tbody.children).OfType<HTMLTableRow>().Skip(1).Select(t => new AccountViewModel(t));
+
+            var items = NotifyIconMenu.Items;
+            MenuItem item;
+            items.Clear();
+            foreach (var account in accounts)
+            {
+                item = new MenuItem { Header = account.Name };
+                item.Click += (_, __) => SelectAccount(account);
+                items.Add(item);
+            }
+
+            items.Add(new Separator());
+            item = new MenuItem { Header = "閉じる(_X)" };
+            item.Click += ExitMenuItem_Click;
+            items.Add(item);
+        }
+
+        private void SelectAccount(AccountViewModel account)
+        {
+            account.StartElement.click();
         }
     }
 }
