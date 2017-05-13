@@ -52,6 +52,11 @@ namespace EcoLauncher.Views
             }
         }
 
+        private void ListMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Window_Loaded(null, null);
+        }
+
         private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
             Console.WriteLine(e.Uri.LocalPath);

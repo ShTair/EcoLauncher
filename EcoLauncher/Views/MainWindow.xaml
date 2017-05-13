@@ -11,6 +11,7 @@
             <MenuItem Header="設定(_O)">
                 <MenuItem Header="アカウント設定(_A)..." Click="AccountSettingsMenuItem_Click" />
             </MenuItem>
+            <MenuItem Header="アカウント一覧に戻る(_L)" Click="ListMenuItem_Click" />
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="{Binding Status}" />
