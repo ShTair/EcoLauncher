@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EcoLauncher.Views"
         mc:Ignorable="d"
-        Title="ECOランチャー" Height="300" Width="300" ResizeMode="CanResizeWithGrip">
+        Title="ECOランチャー" Height="300" Width="300" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closed="Window_Closed">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="設定(_O)" />
+            <MenuItem Header="設定(_O)">
+                <MenuItem Header="アカウント設定(_A)..." Click="AccountSettingsMenuItem_Click" />
+            </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="{Binding Status}" />
         </StatusBar>
-        <WebBrowser />
+        <WebBrowser Name="Browser" LoadCompleted="Browser_LoadCompleted" />
     </DockPanel>
 </Window>
