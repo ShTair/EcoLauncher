@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EcoLauncher.Views"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
-        Title="ECOランチャー" Height="300" Width="300" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="ECOランチャー" Height="300" Width="300" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closed="Window_Closed" StateChanged="Window_StateChanged">
     <DockPanel>
+        <tb:TaskbarIcon x:Name="NotifyIcon"
+                        ToolTipText="ECOランチャー"
+                        IconSource="/EcoLauncher;component/Images/Eco.ico"
+                        TrayMouseDoubleClick="NotifyIcon_TrayMouseDoubleClick">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu Name="NotifyIconMenu">
+                    <MenuItem Header="Test" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定(_O)">
                 <MenuItem Header="アカウント設定(_A)..." Click="AccountSettingsMenuItem_Click" />

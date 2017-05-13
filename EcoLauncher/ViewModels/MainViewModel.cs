@@ -2,7 +2,7 @@
 
 namespace EcoLauncher.ViewModels
 {
-    class MainViewModel :INotifyPropertyChanged
+    class MainViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

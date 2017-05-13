@@ -52,6 +52,28 @@ namespace EcoLauncher.Views
             }
         }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Normal:
+                case WindowState.Maximized:
+                    ShowInTaskbar = true;
+                    break;
+                case WindowState.Minimized:
+                    ShowInTaskbar = false;
+                    break;
+            }
+        }
+
+        private void NotifyIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
+
         private void ListMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Window_Loaded(null, null);
