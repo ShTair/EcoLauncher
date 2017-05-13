@@ -38,6 +38,11 @@ namespace EcoLauncher.Views
             Browser.Navigate("https://member.gungho.jp/front/member/webgs/eccenter_old.aspx");
         }
 
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void AccountSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var w = new AccountSettingsWindow { Owner = this };
@@ -49,6 +54,28 @@ namespace EcoLauncher.Views
                 Settings.Default.UserName = w.UserNameBox.Text;
                 Settings.Default.Password = w.PasswordBox.Text;
                 Settings.Default.Save();
+            }
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Normal:
+                case WindowState.Maximized:
+                    ShowInTaskbar = true;
+                    break;
+                case WindowState.Minimized:
+                    ShowInTaskbar = false;
+                    break;
+            }
+        }
+
+        private void NotifyIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
             }
         }
 
