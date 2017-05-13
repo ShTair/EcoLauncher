@@ -12,7 +12,7 @@ namespace EcoLauncher.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string _lastUrl;
+        private DateTime _lastLogin;
 
         private MainViewModel ViewModel => (MainViewModel)DataContext;
 
@@ -65,19 +65,22 @@ namespace EcoLauncher.Views
                 case "/front/safetylock/verify.aspx":
                     ViewModel.Status = "IDロックが設定されています。";
                     break;
+                case "/front/guest/imageauth.aspx":
+                    ViewModel.Status = "画像認証が必要です。";
+                    break;
             }
-
-            _lastUrl = e.Uri.LocalPath;
         }
 
         private void Login()
         {
             if (string.IsNullOrWhiteSpace(Settings.Default.UserName)
-                || _lastUrl == "/front/guest/login.aspx")
+                || _lastLogin > DateTime.Now.AddMinutes(-1))
             {
                 AccountSettingsMenuItem_Click(null, null);
                 if (string.IsNullOrWhiteSpace(Settings.Default.UserName)) Close();
             }
+
+            _lastLogin = DateTime.Now;
 
             var doc = (HTMLDocument)Browser.Document;
             doc.getElementById("MainContent_loginNameControl_txtLoginName").setAttribute("value", Settings.Default.UserName);
