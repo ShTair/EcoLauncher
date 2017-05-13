@@ -14,13 +14,16 @@
                         TrayMouseDoubleClick="NotifyIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu Name="NotifyIconMenu">
-                    <MenuItem Header="Test" />
+                    <Separator />
+                    <MenuItem Header="閉じる(_X)" Click="ExitMenuItem_Click" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定(_O)">
                 <MenuItem Header="アカウント設定(_A)..." Click="AccountSettingsMenuItem_Click" />
+                <Separator />
+                <MenuItem Header="閉じる(_X)" Click="ExitMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="アカウント一覧に戻る(_L)" Click="ListMenuItem_Click" />
         </Menu>

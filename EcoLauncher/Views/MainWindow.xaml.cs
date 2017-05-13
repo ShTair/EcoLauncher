@@ -38,6 +38,11 @@ namespace EcoLauncher.Views
             Browser.Navigate("https://member.gungho.jp/front/member/webgs/eccenter_old.aspx");
         }
 
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void AccountSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var w = new AccountSettingsWindow { Owner = this };
