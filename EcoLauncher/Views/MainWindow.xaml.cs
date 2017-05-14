@@ -21,6 +21,9 @@ namespace EcoLauncher.Views
 
         public MainWindow()
         {
+            BrowserUtils.SetFeatureBrowserEmulation(11001);
+            BrowserUtils.SetFeatureGpuRendering(true);
+
             InitializeComponent();
 
             Width = Settings.Default.Width;
