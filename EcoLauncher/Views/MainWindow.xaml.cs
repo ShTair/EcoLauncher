@@ -40,6 +40,7 @@ namespace EcoLauncher.Views
                 Settings.Default.Width = Width;
                 Settings.Default.Height = Height;
             }
+            Settings.Default.LastMinimized = WindowState == WindowState.Minimized;
             Settings.Default.Save();
         }
 
@@ -134,7 +135,7 @@ namespace EcoLauncher.Views
             doc.getElementById("MainContent_btNext1").click();
         }
 
-        private void ListAccounts()
+        private async void ListAccounts()
         {
             var doc = (HTMLDocument)Browser.Document;
             var rootSpan = (HTMLSpanElement)doc.getElementById("labViewAttractionID");
@@ -142,6 +143,8 @@ namespace EcoLauncher.Views
 
             var accounts = ((IEnumerable)tbody.children).OfType<HTMLTableRow>().Skip(1).Select(t => new AccountViewModel(t)).ToList();
             accounts.Sort((a, b) => a.Name.CompareTo(b.Name));
+
+            ViewModel.Status = $"{accounts.Count}個のアカウントが見つかりました。";
 
             var items = NotifyIconMenu.Items;
             MenuItem item;
@@ -157,20 +160,25 @@ namespace EcoLauncher.Views
             item = new MenuItem { Header = "閉じる(_X)" };
             item.Click += ExitMenuItem_Click;
             items.Add(item);
-        }
 
-        private async void StartAccount(AccountViewModel account)
-        {
-            bool ismin = WindowState == WindowState.Minimized;
-            if (ismin) WindowState = WindowState.Normal;
-
-            account.StartElement.click();
-
-            if (ismin)
+            if (Settings.Default.LastMinimized)
             {
+                Settings.Default.LastMinimized = false;
+
                 await Task.Delay(TimeSpan.FromSeconds(5));
                 WindowState = WindowState.Minimized;
             }
+        }
+
+        private void StartAccount(AccountViewModel account)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                Settings.Default.LastMinimized = true;
+                WindowState = WindowState.Normal;
+            }
+
+            account.StartElement.click();
         }
     }
 }

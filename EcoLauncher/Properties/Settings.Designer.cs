@@ -70,5 +70,17 @@ namespace EcoLauncher.Properties {
                 this["Height"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LastMinimized {
+            get {
+                return ((bool)(this["LastMinimized"]));
+            }
+            set {
+                this["LastMinimized"] = value;
+            }
+        }
     }
 }
