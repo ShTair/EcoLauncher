@@ -2,11 +2,12 @@
 using EcoLauncher.ViewModels;
 using mshtml;
 using System;
-using System.Windows;
-using System.Windows.Navigation;
-using System.Linq;
 using System.Collections;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace EcoLauncher.Views
 {
@@ -34,8 +35,11 @@ namespace EcoLauncher.Views
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Settings.Default.Width = Width;
-            Settings.Default.Height = Height;
+            if (WindowState == WindowState.Normal)
+            {
+                Settings.Default.Width = Width;
+                Settings.Default.Height = Height;
+            }
             Settings.Default.Save();
         }
 
@@ -136,7 +140,8 @@ namespace EcoLauncher.Views
             var rootSpan = (HTMLSpanElement)doc.getElementById("labViewAttractionID");
             var tbody = rootSpan.getElementsByTagName("tbody").Cast<HTMLTableSection>().First();
 
-            var accounts = ((IEnumerable)tbody.children).OfType<HTMLTableRow>().Skip(1).Select(t => new AccountViewModel(t));
+            var accounts = ((IEnumerable)tbody.children).OfType<HTMLTableRow>().Skip(1).Select(t => new AccountViewModel(t)).ToList();
+            accounts.Sort((a, b) => a.Name.CompareTo(b.Name));
 
             var items = NotifyIconMenu.Items;
             MenuItem item;
@@ -144,7 +149,7 @@ namespace EcoLauncher.Views
             foreach (var account in accounts)
             {
                 item = new MenuItem { Header = account.Name };
-                item.Click += (_, __) => SelectAccount(account);
+                item.Click += (_, __) => StartAccount(account);
                 items.Add(item);
             }
 
@@ -154,9 +159,18 @@ namespace EcoLauncher.Views
             items.Add(item);
         }
 
-        private void SelectAccount(AccountViewModel account)
+        private async void StartAccount(AccountViewModel account)
         {
+            bool ismin = WindowState == WindowState.Minimized;
+            if (ismin) WindowState = WindowState.Normal;
+
             account.StartElement.click();
+
+            if (ismin)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                WindowState = WindowState.Minimized;
+            }
         }
     }
 }
