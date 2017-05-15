@@ -30,6 +30,11 @@ namespace EcoLauncher.Views
             Width = Settings.Default.Width;
             Height = Settings.Default.Height;
 
+#if DEBUG
+            Title += "（デバッグモード）";
+            NotifyIcon.ToolTipText += "（デバッグモード）";
+#endif
+
             DataContext = new MainViewModel();
         }
 
