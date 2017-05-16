@@ -107,6 +107,7 @@ namespace EcoLauncher.Views
             switch (e.Uri.LocalPath)
             {
                 case "/front/guest/login.aspx":
+                case "/front/guest/maintenancelogin.aspx":
                     ViewModel.Status = "ログインしています...";
                     Login();
                     break;
