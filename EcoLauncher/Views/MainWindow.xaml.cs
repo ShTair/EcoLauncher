@@ -92,6 +92,7 @@ namespace EcoLauncher.Views
             if (WindowState == WindowState.Minimized)
             {
                 WindowState = WindowState.Normal;
+                Activate();
             }
         }
 
