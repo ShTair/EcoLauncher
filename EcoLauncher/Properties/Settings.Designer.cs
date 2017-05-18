@@ -38,12 +38,12 @@ namespace EcoLauncher.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Password {
+        public string EncryptedPassword {
             get {
-                return ((string)(this["Password"]));
+                return ((string)(this["EncryptedPassword"]));
             }
             set {
-                this["Password"] = value;
+                this["EncryptedPassword"] = value;
             }
         }
         
