@@ -1,8 +1,10 @@
 ﻿using EcoLauncher.Properties;
 using EcoLauncher.ViewModels;
+using Microsoft.Win32;
 using mshtml;
 using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -185,7 +187,30 @@ namespace EcoLauncher.Views
                 WindowState = WindowState.Normal;
             }
 
+            RestoreShortcut(account.Id);
             account.StartElement.click();
+        }
+
+        private void RestoreShortcut(string key)
+        {
+            try
+            {
+                var reg = Registry.CurrentUser.OpenSubKey(@"Software\GungHo\Emil chronicle online");
+                var eco = reg.GetValue("LaunchPath") as string;
+                var dpath = Path.Combine(eco, "config");
+                var spath = Path.Combine(dpath, "config_" + key);
+                if (!Directory.Exists(spath)) return;
+
+                foreach (var sname in Directory.EnumerateFiles(spath, "MACRO*.xml"))
+                {
+                    var dname = Path.Combine(dpath, Path.GetFileName(sname));
+                    File.Copy(sname, dname, true);
+                }
+            }
+            catch
+            {
+                ViewModel.Status = "ショートカットのリストアに失敗しました。";
+            }
         }
     }
 }
